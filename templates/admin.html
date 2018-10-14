@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+
+  <link rel="stylesheet" href="{{
+  url_for('static', filename='neon.css') }}" type="text/css">
+    <script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script>
+    <script type=text/javascript src="{{
+  url_for('static', filename='jquery.bootgrid.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{
+  url_for('static', filename='jquery.bootgrid.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{
+  url_for('static', filename='sidenav.css') }}" type="text/css">
+</head>
+
+<body>
+  <div id="wrapper">
+ <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Exploring
+                    </a>
+                </li>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <a href="/admin">Admin</a>
+                </li>
+
+            </ul>
+  </div>
+ <div id="page-content-wrapper">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container"> <a class="navbar-brand" id="menu-toggle" href="#">
+        <i class="fa d-inline fa-lg fa-stop-circle"></i>
+        <b> SHRABANEE KITCHEN</b>
+      </a> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar10">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar10">
+      </div>
+    </div>
+  </nav>
+  <div class="py-5 text-center text-white" style="	position: relative;	overflow: hidden;	background-image: url(static/header-bg.jpg);	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p class="m-0">Our story, our future</p>
+        <h2 class="mb-3">Michel Comini</h2> <i class="fa d-inline-block fa-star text-white"></i><i class="fa d-inline-block fa-star mx-2 text-white"></i><i class="fa d-inline-block fa-star text-white"></i>
+        <p class="my-4">Considered one of the most brilliant chef of our time. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultrices nes, pellentesque eu, pretium quis, sem.</p>
+        <img class="img-fluid d-block" src="static/signature.png" width="300">
+      </div>
+    </div>
+  </div>
+  <div class="py-5 bg-light">
+    <div class="container">
+        <table id="grid-data" class="table table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th data-column-id="phone" data-type="numeric" data-identifier="true">Mobile Phone</th>
+                    <th data-column-id="name" data-identifier="true">Name</th>
+                    <th data-column-id="quantity" data-order="desc" data-identifier="true">Quantity</th>
+                    <th data-column-id="commands" data-type="numeric" data-identifier="true" data-formatter="commands" data-sortable="false">Commands</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+  </div>
+  <div class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-6 p-3"> <i class="d-block fa fa-circle-o fa-5x text-primary"></i> </div>
+        <div class="col-lg-4 col-6 p-3">
+          <p> <a href="https://goo.gl/maps/AUq7b9W7yYJ2" target="_blank"> Fake street, 100 <br>NYC - 20179, USA</a> </p>
+          <p> <a href="tel:+246 - 542 550 5462">+1 - 256 845 87 86</a> </p>
+          <p class="mb-0"> <a href="mailto:info@pingendo.com">info@pingendo.com</a> </p>
+        </div>
+        <div class="col-md-4 p-3">
+          <h5> <b>About</b> </h5>
+          <p class="mb-0"> I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="mb-0 mt-2">© 2014-2018 Pingendo. All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" ></script>
+   <script>
+$(function() {
+
+  var planningFilter = function () {
+
+      $("#grid-data").bootgrid("destroy");
+      var grid =  $("#grid-data").bootgrid({
+                    ajax: true,
+                    navigation: 3,
+                    css:{
+                     pagination: 'pagination pagination-lg',
+                     paginationButton: 'btn-primary btn-lg'
+                    },
+                    post: function ()
+                    {
+                        return {
+                            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+                        };
+                    },
+                     ajaxSettings: {
+                            method: "POST",
+                            cache: false
+                        },
+                    url: "/orders",
+                    formatters: {
+                        "commands": function(column, row)
+                        {
+                            return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.phone + "\"><span class=\"fa fa-pencil\"></span></button> " +
+                                "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.phone + "\"><span class=\"fa fa-trash-o\"></span></button>";
+                        }
+                    }
+                }).on("loaded.rs.jquery.bootgrid", function()
+                {
+
+                    grid.find(".command-edit").on("click", function(e)
+                    {
+                        alert("You pressed edit on row: " + $(this).data("row-id"));
+                    }).end().find(".command-delete").on("click", function(e)
+                    {
+                        var phone=$(this).data("row-id");
+                        $.ajax({
+                            url:'/deleteorder',
+                            method:'DELETE',
+                            data:{'phone':phone},
+                            dataType:"json",
+                            success:function(data){
+                            planningFilter();
+                            }
+                        });
+
+                    });
+                });
+  }
+
+  planningFilter();
+});
+   </script>
+
+ </div>
+      <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+  </div>
+</body>
+
+</html>
