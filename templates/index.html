@@ -10,8 +10,15 @@
   url_for('static', filename='neon.css') }}" type="text/css">
     <script type=text/javascript src="{{
   url_for('static', filename='jquery.js') }}"></script>
+   <script type=text/javascript src="{{
+  url_for('static', filename='jquery.bootgrid.min.js') }}"></script>
+
+    <link rel="stylesheet" href="{{
+  url_for('static', filename='jquery.bootgrid.min.css') }}" type="text/css">
     <link rel="stylesheet" href="{{
   url_for('static', filename='sidenav.css') }}" type="text/css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -23,12 +30,11 @@
                         Start Exploring
                     </a>
                 </li>
+                {% for key, value in result.items() %}
                 <li>
-                    <a href="/">Home</a>
+                    <a href={{ value }}>{{ key }}</a>
                 </li>
-                <li>
-                    <a href="/admin">Admin</a>
-                </li>
+                {% endfor %}
 
             </ul>
   </div>
@@ -55,6 +61,7 @@
     </div>
   </div>
   <div class="py-5 bg-light">
+    {% block content %}
     <div class="container">
       <div class="row">
         <div class="p-5 col-md-7 d-flex flex-column justify-content-center">
@@ -92,6 +99,7 @@
         </div>
       </div>
     </div>
+    {% endblock %}
   </div>
   <div class="py-3">
     <div class="container">
@@ -115,9 +123,8 @@
     </div>
   </div>
 
+{% block script %}
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
  <script type=text/javascript>
   $(function() {
     $('#submitfrm').bind('click', function() {
@@ -134,6 +141,7 @@
     });
   });
 </script>
+        {% endblock %}
     </div>
          <script>
     $("#menu-toggle").click(function(e) {
