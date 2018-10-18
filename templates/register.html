@@ -1,0 +1,124 @@
+{% extends "index.html" %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <form  role="form">
+
+                  <div class="form-group">
+                    <label for="inputName" class="control-label">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="inputName" placeholder="Name" data-error="Name is required" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputEmail" class="control-label">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" data-error="Email address is invalid" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPhone" class="control-label">Email</label>
+                    <input type="number" class="form-control" id="inputPhone" name="inputPhone" placeholder="Mobile" data-error="Mobile nummber is required" required>
+                  </div>
+
+
+                  <div class="form-group">
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="underwear" data-error="Select one of gender option" required>
+                        Male
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="underwear" data-error="Select one of gender option" required>
+                        Female
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" id="terms" name="terms" data-error="Accept term condition" required>
+                        Check yourself
+                      </label>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </form>
+            </div>
+            <div class="col-sm-4 col-sm-offset-2">
+                <div class="alert alert-info" id="errors"> <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
+                        <h4 class="alert-heading">Errors !</h4>
+                </div>
+                 <div class="alert alert-info" id="info"> <button type="button" class="close" data-dismiss="alert" aria-label="Close">×</button>
+                        <h4 class="alert-heading">Info !</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+ {% endblock %}
+{% block script %}
+ <script>
+ var $errors = $('#errors');
+ $errors.attr('hidden', true);
+ var $info = $('#info');
+ $info.attr('hidden', true);
+ $('form').validator({
+
+  // the delay in milliseoncds
+  delay: 500,
+
+  // allows html inside the error messages
+  html: false,
+
+  // disable submit button if there's invalid form
+  disable: true,
+
+  // <a href="https://www.jqueryscript.net/tags.php?/Scroll/">Scroll</a> to and focus the first field with an error upon validation of the form.
+  focus: true,
+  // define your custom validation rules
+  custom: {},
+
+}).on('invalid.bs.validator', function (e) {
+    var $field = $(e.relatedTarget);
+    var errors = e.detail;
+
+    var $errorsList = $('<ul/>').attr('data-name', $field.attr('name'));
+    $errorsList.append($.map(errors, function (error) {
+      return $('<li/>').text(error);
+    }))
+
+    $errors.find('ul[data-name="' + $field.attr('name') + '"]').remove();
+    $errors.attr('hidden', false).append($errorsList);
+    $errors.append($errorsList);
+    $info.attr('hidden', true);
+}).on('valid.bs.validator', function (e) {
+    var $field = $(e.relatedTarget);
+    $errors.find('ul[data-name="' + $field.attr('name') + '"]').remove();
+    if($errors.find('ul').length == 0){
+        $errors.attr('hidden', true);
+    }
+}).on('submit', function (e) {
+    $info.attr('hidden', true);
+    if (e.isDefaultPrevented()) {
+       // alert('form is not valid');
+    } else {
+
+        e.preventDefault();
+        //alert('form is valid');
+        $.post( "/post/customer",
+
+            $( "form" ).serialize(),
+
+            function( data ) {
+
+                 $info.html( data );
+                 $info.attr('hidden', false);
+
+            });
+
+    }
+});
+</script>
+{% endblock %}

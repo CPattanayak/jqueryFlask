@@ -6,16 +6,22 @@ mongourl = os.getenv("MONGO-URL","mongodb://localhost:27017")
 client = MongoClient(mongourl)
 db = client.todoapp
 customerCollection=db["order"]
-routers = {'Home': '/', 'Admin': '/admin'}
+routers = {'Home': '/', 'Admin': '/admin', 'Register':'/register'}
 @app.route('/')
 def home():
   return render_template('index.html', result = routers)
 
 @app.route('/admin')
-def admin():
+def adminpage():
   return render_template('admin.html',result = routers)
 
+@app.route('/register')
+def register():
+  return render_template('register.html',result = routers)
 
+@app.route("/post/customer", methods=['POST'])
+def postcustomer():
+    return "Success"
 
 @app.route("/order")
 def evaluateorder():
