@@ -6,6 +6,7 @@ mongourl = os.getenv("MONGO-URL","mongodb://localhost:27017")
 client = MongoClient(mongourl)
 db = client.todoapp
 customerCollection=db["order"]
+custDetail=db["customer"]
 routers = {'Home': '/', 'Admin': '/admin', 'Register':'/register'}
 @app.route('/')
 def home():
@@ -21,6 +22,11 @@ def register():
 
 @app.route("/post/customer", methods=['POST'])
 def postcustomer():
+    name = request.form.get('inputName', '', type=str)
+    email = request.form.get('inputEmail','',type=str)
+    phone = request.form.get('inputPhone',0,type=int)
+    gender= request.form.get('underwear','',type=str)
+    custDetail.insert_one({'name':name,'phone':phone,'email':email,'gender':gender})
     return "Success"
 
 @app.route("/order")
