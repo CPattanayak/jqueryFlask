@@ -58,4 +58,4 @@ def deleteOrder():
     print(x.deleted_count, " documents deleted.")
     return jsonify({'result': 'Success'})
 
-app.run(port=5000)
+app.run(port=5000,host='0.0.0.0', debug=True)
