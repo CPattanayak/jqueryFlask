@@ -1,4 +1,4 @@
-microserviceName = "jqueryFlask"
+
 pipeline {
   agent {
     kubernetes {
@@ -42,11 +42,11 @@ spec:
     stage('Build image') {
       steps {
         container('docker') {
-		 git 'https://github.com/CPattanayak/${microserviceName}.git'
+		 git 'https://github.com/CPattanayak/jqueryflask.git'
 
          
           script {
-                        def image = docker.build("cpattanayak/${microserviceName}:$BUILD_NUMBER")
+                        def image = docker.build("cpattanayak/jqueryflask:$BUILD_NUMBER")
                         docker.withRegistry( '', "dockerhubid") {
                             image.push()
                  }
@@ -61,6 +61,13 @@ spec:
                        
                        
                        script{
+                        def checkDeployment = sh(script: "kubectl get deployments | grep db-deployment", returnStatus: true)
+                        if(checkDeployment != 0) {
+                            sh "kubectl apply -f db-deployment.yaml"
+                        }
+                        sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment.yaml > deploy.yaml"
+                        sh "cat deploy.yaml"
+                        sh "kubectl apply -f deploy.yaml"
                         sh "kubectl get pods"
 						
                        
