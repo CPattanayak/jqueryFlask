@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  labels:
+    app: db
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: db
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: mongo:3.6.4
+        imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: db
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  selector:
+    app: db
+  ports:
+    - protocol: TCP
+      port: 27017
+      nodePort: 30003
+  type: NodePort
+  
+  
