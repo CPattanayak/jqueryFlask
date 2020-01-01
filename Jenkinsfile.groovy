@@ -42,7 +42,8 @@ spec:
     stage('Build image') {
       steps {
         container('docker') {
-		checkout scm
+		 git 'https://github.com/CPattanayak/${microserviceName}.git'
+
          
           script {
                         def image = docker.build("cpattanayak/${microserviceName}:$BUILD_NUMBER")

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: backend
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: cpattanayak/jqueryflask:<imageid>
+        env:
+            - name: MONGO-URL
+              value: "mongodb://db:27017"
+            
+        imagePullPolicy: IfNotPresent
+        ports:
+            - containerPort: 5000
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: backend
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - protocol: TCP
+    port: 5000
+    nodePort: 30002
+  type: NodePort
+  
+  
