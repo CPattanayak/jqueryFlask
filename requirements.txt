@@ -1,2 +1,7 @@
 flask
 pymongo
+requests
+allure-behave
+selenium
+xvfbwrapper
+behave-webdriver
