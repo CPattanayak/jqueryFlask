@@ -97,6 +97,12 @@ spec:
                 }
             }
     }
+    post {
+        always {
+            archiveArtifacts artifacts: 'allure-report.tar.gz', fingerprint: true
+            
+        }
+    }
 	
 }
 
