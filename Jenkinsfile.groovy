@@ -19,7 +19,7 @@ spec:
     command:
     - cat
     tty: true
- - name: python
+  - name: python
     image: cpattanayak/python:v3
     command:
     - cat
@@ -97,11 +97,6 @@ spec:
                 }
             }
     }
-	post {
-        always {
-            archiveArtifacts artifacts: 'allure-report.tar.gz', fingerprint: true
-            
-        }
-    }
+	
 }
 
