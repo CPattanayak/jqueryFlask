@@ -27,7 +27,7 @@ def sample_when(context):
 @then('reciving success alert')
 def sample_then(context):
     print('calling sample_then')
-    time.sleep(1)
+    time.sleep(5)
     alert = context.driver.switch_to.alert
     alert_txt = alert.text
     assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
@@ -37,11 +37,11 @@ def sample_then(context):
 @when('when move to admin page')
 def when_admin_click(context):
     context.driver.find_element_by_xpath('//*[@id="menu-toggle"]/i').click()
-    time.sleep(1)
+    time.sleep(5)
     context.driver.find_element_by_xpath('//*[@id="sidebar-wrapper"]/ul/li[3]/a').click()
-    time.sleep(1)
+    time.sleep(5)
     context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
-    time.sleep(1)
+    time.sleep(5)
 
 
 @then('check verify edit alert')
@@ -56,7 +56,7 @@ def check_edit_message(context):
 @when('delete button click')
 def when_delete_click(context):
     context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[2]').click()
-    time.sleep(1)
+    time.sleep(5)
 
 
 @then('displaying no data found')
