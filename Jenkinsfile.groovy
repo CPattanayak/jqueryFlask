@@ -19,6 +19,11 @@ spec:
     command:
     - cat
     tty: true
+ - name: python
+    image: cpattanayak/python:v3
+    command:
+    - cat
+    tty: true
   - name: docker
     image: docker:latest
     command:
@@ -68,12 +73,34 @@ spec:
                         sh "sed 's/<imageid>/$BUILD_NUMBER/g' deployment.yaml > deploy.yaml"
                         sh "cat deploy.yaml"
                         sh "kubectl apply -f deploy.yaml"
-                        sh "kubectl get pods"
+                        sh 'chmod 777 depl-sh.sh'
+                        sh 'sh depl-sh.sh'
 						
                        
                     }
                 }
             }
+        }
+		stage('Integration Test') {
+            steps {
+                
+                    container('python') {
+                       
+                   
+                    sh 'pip install behave-webdriver'
+                    sh 'chmod 777 run-sh.sh'
+                    sh 'sh run-sh.sh'
+				    
+				  
+                       
+                    }
+                }
+            }
+    }
+	post {
+        always {
+            archiveArtifacts artifacts: 'allure-report.tar.gz', fingerprint: true
+            
         }
     }
 }

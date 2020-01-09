@@ -17,9 +17,10 @@ def after_step(context, step):
 
 
 def before_scenario(context, scenario):
-    context.driver = behave_webdriver.Chrome()
-    #context.driver = behave_webdriver.Chrome.headless()
-    context.driver.get("http://localhost:30002/")
+    #context.driver = behave_webdriver.Chrome()
+    context.driver = behave_webdriver.Chrome.headless()
+    #context.driver.get("http://localhost:30002/")
+    context.driver.get("http://backend:5000/")
 
     print("{separator} Start Feature: [{}] Scenario: [{}] {separator}\r\n".format(context.feature.name, context.scenario.name, separator=SCENARIO_SECTION_SEPARATOR))
 
