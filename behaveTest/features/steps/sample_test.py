@@ -2,7 +2,7 @@ import time
 
 from behave import given, then, when
 
-
+from selenium.common.exceptions import NoAlertPresentException
 @given(u'For given user "{user_name}" ph "{phone:d}" quantity "{qty:d}"')
 def sample_given(context, user_name, phone, qty):
     print('Running sample_given')
@@ -28,10 +28,13 @@ def sample_when(context):
 def sample_then(context):
     print('calling sample_then')
     time.sleep(5)
-    alert = context.driver.switch_to.alert
-    alert_txt = alert.text
-    assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
-    alert.accept()
+    try:
+        alert = context.driver.switch_to.alert
+        alert_txt = alert.text
+        assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
+        alert.accept()
+    except NoAlertPresentException:
+        pass
 
 
 @when('when move to admin page')
@@ -46,11 +49,14 @@ def when_admin_click(context):
 
 @then('check verify edit alert')
 def check_edit_message(context):
-    alert = context.driver.switch_to.alert
-    alert_txt = alert.text
-    expected_txt = "You pressed edit on row: " + str(context.phone)
-    assert expected_txt in alert_txt, 'Found "%s" instead ' % alert_txt
-    alert.accept()
+    try:
+        alert = context.driver.switch_to.alert
+        alert_txt = alert.text
+        expected_txt = "You pressed edit on row: " + str(context.phone)
+        assert expected_txt in alert_txt, 'Found "%s" instead ' % alert_txt
+        alert.accept()
+    except NoAlertPresentException:
+        pass
 
 
 @when('delete button click')
