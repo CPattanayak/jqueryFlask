@@ -34,6 +34,7 @@ def sample_then(context):
         assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
+        print('NoAlertPresentException')
         context.driver.switch_to.parent_frame()
        # context.driver.manage().window().maximize()
         pass
@@ -42,13 +43,16 @@ def sample_then(context):
 @when('when move to admin page')
 def when_admin_click(context):
     try:
+        print('menu-toggle ')
         context.driver.find_element_by_xpath('//*[@id="menu-toggle"]').click()
         time.sleep(5)
+        print('sidebar-wrapper ')
         context.driver.find_element_by_xpath('//*[@id="sidebar-wrapper"]/ul/li[3]/a').click()
         time.sleep(5)
 
     except WebDriverException:
-        context.driver.open_url('http://backend:5000/admin')
+        print('WebDriverException ')
+        #context.driver.open_url('http://backend:5000/admin')
 
    # context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
     context.driver.find_element_by_xpath('/html/body/div/div[2]/div[2]/div/table/tbody/tr[1]/td[4]/button[1]').click()
@@ -67,7 +71,9 @@ def check_edit_message(context):
         assert expected_txt in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
-        context.driver.open_url('http://backend:5000/admin')
+        print('NoAlertPresentException')
+        context.driver.switch_to.parent_frame()
+        #context.driver.open_url('http://backend:5000/admin')
         pass
 
 
