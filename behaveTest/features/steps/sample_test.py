@@ -34,7 +34,7 @@ def sample_then(context):
         assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
-
+        context.driver.switch_to.parent_frame()
        # context.driver.manage().window().maximize()
         pass
 
@@ -58,6 +58,7 @@ def check_edit_message(context):
         assert expected_txt in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
+        context.driver.switch_to.parent_frame()
         pass
 
 
