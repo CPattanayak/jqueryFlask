@@ -49,6 +49,7 @@ def when_admin_click(context):
 
     except WebDriverException:
         context.driver.open_url('http://backend:5000/admin')
+
     context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
     time.sleep(5)
 
@@ -64,7 +65,7 @@ def check_edit_message(context):
         assert expected_txt in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
-        context.driver.switch_to.parent_frame()
+        context.driver.open_url('http://backend:5000/admin')
         pass
 
 
