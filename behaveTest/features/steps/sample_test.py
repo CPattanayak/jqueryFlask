@@ -34,6 +34,7 @@ def sample_then(context):
         assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
+        context.driver.manage().window().maximize()
         pass
 
 
