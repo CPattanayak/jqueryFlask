@@ -50,7 +50,9 @@ def when_admin_click(context):
     except WebDriverException:
         context.driver.open_url('http://backend:5000/admin')
 
-    context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
+   # context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
+    context.driver.find_element_by_xpath('/html/body/div/div[2]/div[2]/div/table/tbody/tr[1]/td[4]/button[1]').click()
+
     time.sleep(5)
 
 
