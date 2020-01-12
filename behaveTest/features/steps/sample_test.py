@@ -2,7 +2,7 @@ import time
 
 from behave import given, then, when
 import behave_webdriver
-from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import NoAlertPresentException,WebDriverException
 @given(u'For given user "{user_name}" ph "{phone:d}" quantity "{qty:d}"')
 def sample_given(context, user_name, phone, qty):
     print('Running sample_given')
@@ -41,12 +41,17 @@ def sample_then(context):
 
 @when('when move to admin page')
 def when_admin_click(context):
-    context.driver.find_element_by_xpath('//*[@id="menu-toggle"]').click()
-    time.sleep(5)
-    context.driver.find_element_by_xpath('//*[@id="sidebar-wrapper"]/ul/li[3]/a').click()
-    time.sleep(5)
-    context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
-    time.sleep(5)
+    try:
+        context.driver.find_element_by_xpath('//*[@id="menu-toggle"]').click()
+        time.sleep(5)
+        context.driver.find_element_by_xpath('//*[@id="sidebar-wrapper"]/ul/li[3]/a').click()
+        time.sleep(5)
+        context.driver.find_element_by_xpath('//*[@id="grid-data"]/tbody/tr[1]/td[4]/button[1]').click()
+        time.sleep(5)
+    except WebDriverException:
+        context.driver.open_url('http://backend:5000/admin')
+        pass
+
 
 
 @then('check verify edit alert')
