@@ -1,7 +1,7 @@
 import time
 
 from behave import given, then, when
-
+import behave_webdriver
 from selenium.common.exceptions import NoAlertPresentException
 @given(u'For given user "{user_name}" ph "{phone:d}" quantity "{qty:d}"')
 def sample_given(context, user_name, phone, qty):
@@ -34,13 +34,19 @@ def sample_then(context):
         assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
+        context.driver.close()
+        context.driver.quit()
+        context.driver = behave_webdriver.Chrome.headless()
+        # context.driver.get("http://localhost:30002/")
+        context.driver.get("http://backend:5000/")
+
         context.driver.manage().window().maximize()
         pass
 
 
 @when('when move to admin page')
 def when_admin_click(context):
-    context.driver.find_element_by_xpath('//*[@id="menu-toggle"]/i').click()
+    context.driver.find_element_by_xpath('//*[@id="menu-toggle"]').click()
     time.sleep(5)
     context.driver.find_element_by_xpath('//*[@id="sidebar-wrapper"]/ul/li[3]/a').click()
     time.sleep(5)
