@@ -34,12 +34,7 @@ def sample_then(context):
         assert 'Success' in alert_txt, 'Found "%s" instead ' % alert_txt
         alert.accept()
     except NoAlertPresentException:
-        context.driver.close()
-        context.driver.quit()
-        context.driver = behave_webdriver.Chrome.headless()
-        # context.driver.get("http://localhost:30002/")
-        context.driver.get("http://backend:5000/")
-
+       
         context.driver.manage().window().maximize()
         pass
 
